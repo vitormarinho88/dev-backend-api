@@ -24,3 +24,10 @@ class Product extends Model{
 }
 
 export default Product;    //// -> Quando declara a classe static ou init , nao pode exportada instanciada como: "new Product()"
+
+
+
+
+//Campo Virtual 
+
+//get -> produto -> SEQUELIZE busca produto -> Monta campo virtual com os dados dos produtos 
