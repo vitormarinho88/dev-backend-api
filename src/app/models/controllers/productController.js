@@ -2,10 +2,10 @@ import * as Yup from 'yup';
 import Product from '../product.js';
 
 class productController {
-    async store(request , response){
+  async store(request , response){
 
-       console.log('BODY:', request.body);
-       console.log('FILE:', request.file);
+       //console.log('BODY:', request.body);
+       //console.log('FILE:', request.file);
 
        const schema = Yup.object({
         name: Yup.string().required(),
