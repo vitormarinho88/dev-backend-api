@@ -23,7 +23,7 @@ class CategoryController {
     if (err.name === 'SequelizeUniqueConstraintError') {
       return response.status(409).json({ error: 'Categoria já existe.' });
     }
-    console.error(err); // agora você vai ver o erro REAL no terminal
+    console.error(err); 
     return response.status(500).json({ error: 'Erro interno ao criar categoria.' });
   }
 
