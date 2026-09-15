@@ -17,7 +17,7 @@ const authMiddleware = (request , response, next) => {
         if(error){
             throw Error();
         }
-       request.useId = decoded.id;
+       request.userId = decoded.id;
     });
    } catch (error) {
      return response.status(401).json({error: 'Token is invalid'});
