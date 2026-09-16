@@ -14,7 +14,7 @@ class CategoryController {
        return response.status(400).json({error: err.errors});
       }
 
-      const { name } = request.body;
+     const { name } = request.body;
         
     try {
     const newCategory = await Category.create({ name });
