@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 import Product from '../models/product.js';
+import Category from '../models/category.js';
+
 
 class productController {
   async store(request , response){
@@ -7,7 +9,7 @@ class productController {
        const schema = Yup.object({
         name: Yup.string().required(),
         price: Yup.number().required(),
-        category: Yup.string().required(),
+        category_id: Yup.number().required(),
      });
     
    
@@ -19,11 +21,11 @@ class productController {
     }
 
 
-     const { name, price, category } = validData;
+     const { name, price, category_id } = validData;
      const { filename } = request.file;
  
     try{
-        const newProduct =  await Product.create({name, price, category, path: filename });
+        const newProduct =  await Product.create({name, price, category_id, path: filename });
         return response.status(201).json(newProduct);
     }catch(err){
         console.error('DB ERROR:', err.stack);
@@ -34,7 +36,13 @@ class productController {
    
     
     async index(_request , response){
-        const products = await Product.findAll()
+        const products = await Product.findAll({
+            include: {
+                model: Category ,
+                as: 'category',
+                attributes: ['id', 'name'],
+            },
+        });
 
         return response.status(200).json(products)
     }

@@ -6,7 +6,6 @@ class Product extends Model{
             {
                 name: Sequelize.STRING,
                 price: Sequelize.INTEGER,
-                category: Sequelize.STRING,
                 path: Sequelize.STRING,
                 url:{
                     type: Sequelize.VIRTUAL,
@@ -20,7 +19,19 @@ class Product extends Model{
                 tableName: 'products'
             },
         );
+    
+        return this;  
     }
+
+    static associate(models){
+        this.belongsTo(models.Category,{
+            foreignKey: 'category_id',
+            as: 'category',
+        });
+    }
+
+
+
 }
 
 export default Product;    //// -> Quando declara a classe static ou init , nao pode exportada instanciada como: "new Product()"
