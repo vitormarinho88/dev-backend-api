@@ -9,7 +9,7 @@ const authMiddleware = (request , response, next) => {
         return response.status(401).json({error: 'Token not provided'});
     }
 
-   const token = authToken.split(' ')[1];
+   const token = authToken.split(' ')[1];  
 
    try {
     jwt.verify(token, authConfig.secret,(error, decoded) => {
@@ -17,7 +17,10 @@ const authMiddleware = (request , response, next) => {
         if(error){
             throw Error();
         }
-       request.userId = decoded.id;
+       
+
+        request.userId = decoded.id; 
+        request.userIsAdmin = decoded.admin;
     });
    } catch (error) {
      return response.status(401).json({error: 'Token is invalid'});
