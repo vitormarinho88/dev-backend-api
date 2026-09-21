@@ -15,9 +15,23 @@ class CategoryController {
       }
 
      const { name } = request.body;
-        
+     
+     if(!request.file){
+      return response.status(400).json({error: 'Imagem é obrigatoria.'});
+     }
+
+     const { filename } = request.file;
+
+     const existingCategory = await Category.findOne({where: {name}});
+
+     if(existingCategory) {
+      return response.status(409).json({error: 'Categoria já existe.'});
+     }
+
+    
+
     try {
-    const newCategory = await Category.create({ name });
+    const newCategory = await Category.create({ name , path: filename ,});
     return response.status(201).json(newCategory);
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {

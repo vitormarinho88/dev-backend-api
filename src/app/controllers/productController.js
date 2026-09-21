@@ -62,7 +62,7 @@ class productController {
     } 
   
     
-     try{
+    try{
         await Product.update(
         {name, price, category_id, offer},{
             where:{
