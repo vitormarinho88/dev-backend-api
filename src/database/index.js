@@ -3,6 +3,7 @@ import databaseConfig from "../config/database.cjs";
 import User from "../app/models/user.js";
 import Product from "../app/models/product.js";
 import Category from "../app/models/category.js";
+import mongoose from "mongoose";                ///ORM DO MONGO DB
 
 const models = [User , Product , Category];
 
@@ -10,6 +11,7 @@ const models = [User , Product , Category];
 class Database {
     constructor(){
         this.init();
+        this.mongo();
     }
 
     init(){
@@ -20,6 +22,13 @@ class Database {
        );
     }
     
+    mongo(){
+    this.mongooseConnection = mongoose.connect(
+        'mongodb://localhost:27017/devbackend',
+    );
+ }
+
 }
+
 
 export default new Database();
