@@ -1,12 +1,14 @@
 import * as Yup from 'yup';
 import Product from '../models/product.js';
 import Category from '../models/category.js';
+import Order from '../schemas/order.js';
+
 
 class orderController {
   async store(request , response){
 
        const schema = Yup.object({
-       products: Yup.array().required().of(
+       products: Yup.array().required().of(   //Cada elemento dentro desse array precisa obedecer a uma determinada estrutura.
         Yup.object({
             id: Yup.number().required(),
             quantity: Yup.number().required(),
@@ -15,7 +17,7 @@ class orderController {
      });
     
    
-    //let validData;
+  
     try{
       schema.validateSync(request.body, {abortEarly:false , strict: true});
     } catch(err) {
@@ -55,7 +57,7 @@ class orderController {
           
         return newProduct;   
    
-      });
+    });
 
 
     const order = {
@@ -63,15 +65,50 @@ class orderController {
             id: userId,
             name: userName,
         },
-        products:mapedProducts, 
+        products: mapedProducts, 
         status: 'Pedido Realizado',
     };
 
-    return response.status(201).json(order);
+    const newOrder = await Order.create(order)
+
+    return response.status(201).json(newOrder);
     
  }
 
-}
+ async update(request, response){
+  const schema = Yup.object({
+    status: Yup.string().required(),
+  });
+ 
+  try{
+      schema.validateSync(request.body, {abortEarly:false , strict: true});
+    } catch(err) {
+     return response.status(400).json({error: err.errors});
+    }
 
+   
+  const { status } = request.body;
+  const { id } = request.params;
+
+
+  try{
+    await Order.updateOne({ _id: id },{ status });
+  }catch(err){
+    return response.status(400).json({error: err.message});
+  }
+  
+
+  return response.status(200).json({message: "Status update Succefully"});
+
+ }
+ 
+ async index( _request , response){
+   const order = await Order.find();
+
+   return response.status(200).json(order);
+ }
+
+
+}
 
 export default new orderController(); 
