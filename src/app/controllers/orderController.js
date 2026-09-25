@@ -92,7 +92,7 @@ class orderController {
 
 
   try{
-    await Order.updateOne({ _id: id },{ status });
+      await Order.updateOne({ _id: id },{ status });
   }catch(err){
     return response.status(400).json({error: err.message});
   }
