@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
 import Product from '../models/product.js';
 import Category from '../models/category.js';
-import Order from '../schemas/order.js';
+import Order from '../schemas/Order.js';
 
 
-class orderController {
+class OrderController {
   async store(request , response){
 
        const schema = Yup.object({
@@ -92,7 +92,7 @@ class orderController {
 
 
   try{
-      await Order.updateOne({ _id: id },{ status });
+    await Order.updateOne({ _id:id }, { status });
   }catch(err){
     return response.status(400).json({error: err.message});
   }
@@ -111,4 +111,4 @@ class orderController {
 
 }
 
-export default new orderController(); 
+export default new OrderController(); 
