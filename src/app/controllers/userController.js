@@ -61,7 +61,7 @@ class UserController {
         admin,
     });
 
-    return response.status(201).json(user)({
+    return response.status(201).json()({
         id: user.id,
         name: user.name,
         email: user.email,
