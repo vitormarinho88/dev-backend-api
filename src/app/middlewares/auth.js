@@ -9,7 +9,7 @@ const authMiddleware = (request , response, next) => {
         return response.status(401).json({error: 'Token not provided'});
     }
 
-   const token = authToken.split(' ')[1];  
+   const token = authToken.split(' ')[1];  // Buscar token depois do  'Bearer'
 
    try {
     jwt.verify(token, authConfig.secret,(error, decoded) => {
